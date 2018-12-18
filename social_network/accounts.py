@@ -13,13 +13,14 @@ class User(object):
     def get_timeline(self):
         timeline = []
         #pdb.set_trace()
-        for follower in self.following:
-            timeline.append(follower.posts)
-        timeline.sort(key= lambda follower: follower.post.timestamp)
+        for other_user in self.following:
+            for post in other_user.posts:
+                timeline.append(post)
+        timeline.sort(key= lambda post: post.timestamp)
         return timeline
 
     def follow(self, other):
         self.following.append(other)
     
     def __str__(self):
-        return '{first} {last} - {email}.\n Following: {following}'.format(first = self.first_name, last = self.last_name, email = self.email)
+        return '{first} {last} - {email}.\n Following: {is_following}'.format(first = self.first_name, last = self.last_name, email = self.email, is_following = self.following)
